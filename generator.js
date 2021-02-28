@@ -32,7 +32,7 @@ async function main() {
     outputWidth
   })
   const finalMosaicBuffer = await mosaic.build()
-  await fs.promises.writeFile(`./finalMosaic.png`, finalMosaicBuffer)
+  await fs.writeFile(`./finalMosaic.png`, finalMosaicBuffer)
 }
 main().then(() => {
   console.log("done")
