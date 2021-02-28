@@ -1,0 +1,59 @@
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      targetPicture:
+        description: "目标图片"
+        required: false
+        default: "https://i0.hdslb.com/bfs/album/2f945aca8e69f48fca826788caa7bb1c56a77ffd.jpg"
+      gridNum:
+        description: "网格大小"
+        required: false
+        default: 100
+      outputWidth:
+        description: "输出宽度"
+        required: false
+        default: 3000
+      
+
+jobs:
+  Generate:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js 14
+      uses: actions/setup-node@v1
+      with:
+        node-version: '14'
+    - name: Install Node Modules
+      run: npm install
+    - name: Install Aria2
+      run: sudo apt -y install aria2
+    - name: Get Face List
+      run: node list.js
+    - uses: actions/cache@v2
+      id: face
+      with:
+        path: | 
+          cache
+        key: ${{ runner.os }}-${{ hashFiles('tmp/face.list') }}
+    - name: Download faces
+      if: steps.face.outputs.cache-hit != 'true'
+      run: aria2c --dir=cache -i tmp/face.list --download-result=full --file-allocation=none -j16
+    - name: Download Target
+      run: aria2 ${{ github.event.inputs.targetPicture || "https://i0.hdslb.com/bfs/album/2f945aca8e69f48fca826788caa7bb1c56a77ffd.jpg" }}
+    - name: Generate Picture
+      run: node generator
+        env: 
+          TARGET_IMAGE: ${{ github.event.inputs.targetPicture || "https://i0.hdslb.com/bfs/album/2f945aca8e69f48fca826788caa7bb1c56a77ffd.jpg" }}
+          GRID_NUM: ${{ github.event.inputs.gridNum || 100 }}
+          OUTPUT_WIDTH: ${{ github.event.inputs.outputWidth || 3000 }}
+    - name: Upload Result
+      uses: actions/upload-artifact@v2
+      with:
+        name: Result
+        path: finalMosaic.png
+  
+
+
+  

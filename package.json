@@ -1,0 +1,24 @@
+{
+  "name": "ddpicturegenerator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "photosaic": "^0.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dd-center/DDPictureGenerator.git"
+  },
+  "author": "Shugen002 (RootChannel)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dd-center/DDPictureGenerator/issues"
+  },
+  "homepage": "https://github.com/dd-center/DDPictureGenerator#readme"
+}
