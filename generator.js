@@ -34,7 +34,7 @@ async function main() {
   const finalMosaicBuffer = await mosaic.build()
   await fs.promises.writeFile(`./finalMosaic.png`, finalMosaicBuffer)
 }
-main.then(() => {
+main().then(() => {
   console.log("done")
 }).catch((e) => {
   console.error(e);
