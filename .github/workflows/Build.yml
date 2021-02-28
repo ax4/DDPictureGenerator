@@ -40,11 +40,11 @@ jobs:
       if: steps.face.outputs.cache-hit != 'true'
       run: aria2c --dir=cache -i tmp/face.list --download-result=full --file-allocation=none -j16
     - name: Download Target
-      run: aria2 ${{ github.event.inputs.targetPicture || "https://i0.hdslb.com/bfs/album/2f945aca8e69f48fca826788caa7bb1c56a77ffd.jpg" }}
+      run: aria2 ${{ github.event.inputs.targetPicture || 'https://i0.hdslb.com/bfs/album/2f945aca8e69f48fca826788caa7bb1c56a77ffd.jpg' }}
     - name: Generate Picture
       run: node generator
       env: 
-        TARGET_IMAGE: ${{ github.event.inputs.targetPicture || "https://i0.hdslb.com/bfs/album/2f945aca8e69f48fca826788caa7bb1c56a77ffd.jpg" }}
+        TARGET_IMAGE: ${{ github.event.inputs.targetPicture || 'https://i0.hdslb.com/bfs/album/2f945aca8e69f48fca826788caa7bb1c56a77ffd.jpg' }}
         GRID_NUM: ${{ github.event.inputs.gridNum || 100 }}
         OUTPUT_WIDTH: ${{ github.event.inputs.outputWidth || 3000 }}
     - name: Upload Result
